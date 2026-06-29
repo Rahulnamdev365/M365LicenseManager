@@ -1,37 +1,32 @@
-Write-Host "=== Loading M365LicenseManager ===" -ForegroundColor Cyan
+<#
+.SYNOPSIS
+    M365LicenseManager Module Loader
+#>
 
 # Import Private Functions
-Get-ChildItem "$PSScriptRoot\Private" -Filter *.ps1 | ForEach-Object {
+$PrivateFunctions = Get-ChildItem `
+    -Path "$PSScriptRoot\Private" `
+    -Filter *.ps1 `
+    -Recurse `
+    -ErrorAction Stop |
+    Sort-Object FullName
 
-    Write-Host "Loading Private: $($_.Name)" -ForegroundColor Yellow
-
-    try {
-        . $_.FullName
-        Write-Host "  SUCCESS" -ForegroundColor Green
-    }
-    catch {
-        Write-Host "  FAILED: $($_.Exception.Message)" -ForegroundColor Red
-    }
+foreach ($Function in $PrivateFunctions) {
+    Write-Verbose "Loading Private Function: $($Function.Name)"
+    . $Function.FullName
 }
 
 # Import Public Functions
-Get-ChildItem "$PSScriptRoot\Public" -Filter *.ps1 | ForEach-Object {
+$PublicFunctions = Get-ChildItem `
+    -Path "$PSScriptRoot\Public" `
+    -Filter *.ps1 `
+    -Recurse `
+    -ErrorAction Stop |
+    Sort-Object FullName
 
-    Write-Host "Loading Public: $($_.Name)" -ForegroundColor Cyan
-
-    try {
-        . $_.FullName
-        Write-Host "  SUCCESS" -ForegroundColor Green
-    }
-    catch {
-        Write-Host "  FAILED: $($_.Exception.Message)" -ForegroundColor Red
-    }
+foreach ($Function in $PublicFunctions) {
+    Write-Verbose "Loading Public Function: $($Function.Name)"
+    . $Function.FullName
 }
 
-$Functions = Get-ChildItem "$PSScriptRoot\Public" -Filter *.ps1 |
-    Select-Object -ExpandProperty BaseName
-
-Write-Host "Exporting:" -ForegroundColor Magenta
-$Functions | ForEach-Object { Write-Host " - $_" }
-
-Export-ModuleMember -Function $Functions
+Export-ModuleMember -Function $PublicFunctions.BaseName
