@@ -17,9 +17,17 @@ function Connect-M365License {
 
     if ($Context -and -not $ForceReconnect) {
 
-        Write-Verbose "Already connected."
+        Write-Verbose "Already connected to Microsoft Graph."
 
-        return $Context
+        return
+
+    }
+
+    if ($ForceReconnect -and $Context) {
+
+        Write-Verbose "Disconnecting existing Microsoft Graph session..."
+
+        Disconnect-MgGraph
 
     }
 
@@ -27,14 +35,25 @@ function Connect-M365License {
 
     Write-Verbose "Connecting to Microsoft Graph..."
 
-    Connect-MgGraph -Scopes $Config.RequiredGraphScopes
+    try {
+
+        $null = Connect-MgGraph `
+            -Scopes $Config.RequiredGraphScopes `
+            -ErrorAction Stop
+
+    }
+    catch {
+
+        throw "Failed to connect to Microsoft Graph. $($_.Exception.Message)"
+
+    }
 
     $Context = Get-MgContext
 
-    if ($null -eq $Context) {
+    if (-not $Context) {
         throw "Unable to establish Microsoft Graph connection."
     }
 
-    return $Context
+    Write-Verbose "Connected as $($Context.Account)"
 
 }

@@ -1,13 +1,40 @@
-function Get-ModuleConfig {
+function Test-GraphModules {
 
     [CmdletBinding()]
     param()
 
-    $ConfigPath = Join-Path $PSScriptRoot 'ModuleConfig.psd1'
+    $Config = Get-ModuleConfig
 
-    if (-not (Test-Path $ConfigPath)) {
-        throw "Module configuration file not found: $ConfigPath"
+    foreach ($Module in $Config.RequiredGraphModules) {
+
+        $InstalledModule = Get-Module `
+            -ListAvailable `
+            -Name $Module |
+            Sort-Object Version -Descending |
+            Select-Object -First 1
+
+        if ($InstalledModule) {
+
+            New-CheckResult `
+                -Check $Module `
+                -Status PASS `
+                -Category Graph `
+                -Severity Low `
+                -Details "Version $($InstalledModule.Version) installed."
+
+        }
+        else {
+
+            New-CheckResult `
+                -Check $Module `
+                -Status FAIL `
+                -Category Graph `
+                -Severity High `
+                -Details "Module not installed." `
+                -Recommendation "Install-Module $Module"
+
+        }
+
     }
 
-    Import-PowerShellDataFile -Path $ConfigPath
 }

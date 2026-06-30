@@ -2,37 +2,76 @@ function Get-M365UserLicense {
 
     [CmdletBinding()]
     param(
+
         [Parameter(Mandatory)]
+        [Alias('UPN')]
         [string]$User
+
     )
 
-    Assert-GraphConnection
+    begin {
 
-    try {
+        Assert-GraphConnection
 
-        $UserObject = Get-MgUser `
-            -UserId $User `
-            -Property AssignedLicenses,DisplayName,UserPrincipalName
+    }
 
-        foreach ($License in $UserObject.AssignedLicenses) {
+    process {
 
-            $SkuInfo = Get-SkuInfo -SkuPartNumber $License.SkuId
+        try {
 
-            [PSCustomObject]@{
+            # Get user
+            $UserObject = Get-MgUser `
+                -UserId $User `
+                -Property DisplayName,UserPrincipalName,AssignedLicenses
 
-                DisplayName      = $UserObject.DisplayName
-                UserPrincipalName = $UserObject.UserPrincipalName
-                SkuId            = $License.SkuId
-                License          = $SkuInfo.DisplayName
+            # Get tenant SKU cache
+            $SubscribedSkus = Get-MgSubscribedSku
+
+            foreach ($AssignedLicense in $UserObject.AssignedLicenses) {
+
+                # Find matching tenant SKU
+                $TenantSku = $SubscribedSkus |
+                    Where-Object SkuId -eq $AssignedLicense.SkuId
+
+                if ($TenantSku) {
+
+                    $SkuInfo = Get-SkuInfo -SkuPartNumber $TenantSku.SkuPartNumber
+
+                    $FriendlyName = $SkuInfo.DisplayName
+                    $SkuPartNumber = $TenantSku.SkuPartNumber
+
+                }
+                else {
+
+                    $FriendlyName = $AssignedLicense.SkuId
+                    $SkuPartNumber = "Unknown"
+
+                }
+
+                [PSCustomObject]@{
+
+                    DisplayName       = $UserObject.DisplayName
+
+                    UserPrincipalName = $UserObject.UserPrincipalName
+
+                    License           = $FriendlyName
+
+                    SkuPartNumber     = $SkuPartNumber
+
+                    SkuId             = $AssignedLicense.SkuId
+
+                    AssignmentType    = "Direct"
+
+                }
 
             }
 
         }
+        catch {
 
-    }
-    catch {
+            throw $_
 
-        throw $_
+        }
 
     }
 
