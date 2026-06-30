@@ -9,6 +9,7 @@ function Test-M365Prerequisites {
     $Results = @()
 
     $Results += Test-PowerShellVersion
+    $Results += Test-GraphModules
 
     return $Results
 
