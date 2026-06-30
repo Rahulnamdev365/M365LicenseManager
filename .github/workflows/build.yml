@@ -16,18 +16,15 @@ jobs:
 
     steps:
 
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup PowerShell
-      uses: actions/setup-powershell@v2
+      - name: Install Pester
+        shell: pwsh
+        run: |
+          Install-Module Pester -Force -Scope CurrentUser -SkipPublisherCheck
 
-    - name: Install Pester
-      shell: pwsh
-      run: |
-        Install-Module Pester -Force -Scope CurrentUser
-
-    - name: Run Pester Tests
-      shell: pwsh
-      run: |
-        Invoke-Pester ./Tests
+      - name: Run Pester Tests
+        shell: pwsh
+        run: |
+          Invoke-Pester ./Tests
