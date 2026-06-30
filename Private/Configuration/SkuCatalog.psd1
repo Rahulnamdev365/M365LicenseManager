@@ -952,8 +952,13 @@
         DisplayName = 'Yammer Enterprise'
     }
 
+    SPE_E5 = @{
+    DisplayName = 'Microsoft 365 E5'
+    }
+
     YAMMER_MIDSIZE = @{
         DisplayName = 'Yammer'
     }
+    
 
 }

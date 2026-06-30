@@ -1,9 +1,11 @@
 function Get-SkuCatalog {
 
     [CmdletBinding()]
-    param()
+    param(
+        [switch]$Refresh
+    )
 
-    if ($script:SkuCatalog) {
+    if (-not $Refresh -and $script:SkuCatalog) {
         return $script:SkuCatalog
     }
 
