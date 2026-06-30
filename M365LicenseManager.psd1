@@ -46,6 +46,7 @@ FunctionsToExport = @(
     'Remove-M365UserLicense',
     'Copy-M365UserLicense',
     'Compare-M365UserLicense'
+    'New-M365LicenseReport'
 )
 
 # Cmdlets to export from this module.
