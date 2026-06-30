@@ -1,0 +1,29 @@
+# PowerShell
+*.ps1xml
+
+# VS Code
+.vscode/
+
+# Visual Studio
+.vs/
+
+# Build Output
+bin/
+obj/
+
+# Test Results
+TestResults/
+
+# Logs
+*.log
+
+# Temporary Files
+*.tmp
+*.bak
+
+# OS Files
+Thumbs.db
+.DS_Store
+
+# PowerShell History
+ConsoleHost_history.txt
