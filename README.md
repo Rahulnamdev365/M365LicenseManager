@@ -165,7 +165,7 @@ Compare-M365UserLicense `
 
 Verify that your environment is ready before using the module.
 
-![Test-M365Prerequisites](docs/images/Test-M365Prerequisites.png)
+![Test-M365Prerequisites](Docs/images/Test-M365Prerequisites.png)
 
 ---
 
@@ -173,7 +173,7 @@ Verify that your environment is ready before using the module.
 
 View all Microsoft 365 licenses in your tenant, including purchased, consumed, and available units.
 
-![Get-M365LicenseInventory](docs/images/Get-M365LicenseInventory.png)
+![Get-M365LicenseInventory](Docs/images/Get-M365LicenseInventory.png)
 
 ---
 
@@ -181,7 +181,7 @@ View all Microsoft 365 licenses in your tenant, including purchased, consumed, a
 
 Retrieve all licenses assigned to a user, including assignment type and friendly license names.
 
-![Get-M365UserLicense](docs/images/Get-M365UserLicense.png)
+![Get-M365UserLicense](Docs/images/Get-M365UserLicense.png)
 
 ---
 
@@ -189,7 +189,7 @@ Retrieve all licenses assigned to a user, including assignment type and friendly
 
 Compare license assignments between two users to quickly identify matching, missing, and extra licenses.
 
-![Compare-M365UserLicense](docs/images/Compare-M365UserLicense.png)
+![Compare-M365UserLicense](Docs/images/Compare-M365UserLicense.png)
 
 ---
 
