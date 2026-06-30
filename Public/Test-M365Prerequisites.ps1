@@ -1,4 +1,3 @@
-Write-Host "Inside Test-M365Prerequisites.ps1"
 function Test-M365Prerequisites {
 
     [CmdletBinding()]
@@ -10,6 +9,7 @@ function Test-M365Prerequisites {
 
     $Results += Test-PowerShellVersion
     $Results += Test-GraphModules
+    $Results += Test-GraphConnection
 
     return $Results
 
