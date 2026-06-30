@@ -1,3 +1,89 @@
+<#
+.SYNOPSIS
+Assigns and removes Microsoft 365 licenses for a user.
+
+.DESCRIPTION
+Assigns, removes, or updates Microsoft 365 licenses for a user using
+Microsoft Graph.
+
+The cmdlet resolves friendly SKU names to Microsoft 365 SKU IDs,
+validates the target user, prevents duplicate license assignments,
+supports WhatIf and Confirm, and can optionally return the updated
+license assignments.
+
+.PARAMETER User
+Specifies the User Principal Name (UPN) of the target user.
+
+.PARAMETER AddLicense
+Specifies one or more Microsoft 365 SKU Part Numbers to assign.
+
+Examples:
+- SPE_E5
+- POWER_BI_STANDARD
+- FLOW_FREE
+
+.PARAMETER RemoveLicense
+Specifies one or more Microsoft 365 SKU Part Numbers to remove.
+
+.PARAMETER PassThru
+Returns the updated license assignments after the operation completes.
+
+.EXAMPLE
+Set-M365UserLicense `
+    -User user@contoso.com `
+    -AddLicense SPE_E5
+
+Assigns the Microsoft 365 E5 license to the user.
+
+.EXAMPLE
+Set-M365UserLicense `
+    -User user@contoso.com `
+    -RemoveLicense FLOW_FREE
+
+Removes the Microsoft Flow Free license.
+
+.EXAMPLE
+Set-M365UserLicense `
+    -User user@contoso.com `
+    -AddLicense SPE_E5 `
+    -RemoveLicense FLOW_FREE
+
+Assigns Microsoft 365 E5 and removes Microsoft Flow Free in a single operation.
+
+.EXAMPLE
+Set-M365UserLicense `
+    -User user@contoso.com `
+    -AddLicense SPE_E5 `
+    -WhatIf
+
+Displays what would happen without making any changes.
+
+.EXAMPLE
+Set-M365UserLicense `
+    -User user@contoso.com `
+    -AddLicense SPE_E5 `
+    -PassThru
+
+Returns the user's updated license assignments after the operation.
+
+.INPUTS
+System.String
+
+.OUTPUTS
+By default, this cmdlet does not return any output.
+
+When -PassThru is specified, it returns the updated license assignments.
+
+.NOTES
+Author : Rahul Namdev
+Module : M365LicenseManager
+Version: 0.3.0
+
+.LINK
+https://github.com/Rahulnamdev365/M365LicenseManager 
+
+#>
+
 function Set-M365UserLicense {
 
     [CmdletBinding(
