@@ -960,5 +960,11 @@
         DisplayName = 'Yammer'
     }
     
+    POWERAPPS_DEV = @{
+    DisplayName = 'Microsoft Power Apps for Developer'
+    }
+    SPE_F1 = @{
+    DisplayName = 'Microsoft 365 F3'
+    }
 
 }
