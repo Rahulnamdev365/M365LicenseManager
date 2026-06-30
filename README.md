@@ -2,9 +2,10 @@
 
 > A PowerShell module for managing Microsoft 365 licenses using Microsoft Graph.
 
+![Build](https://github.com/Rahulnamdev365/M365LicenseManager/actions/workflows/build.yml/badge.svg)
 ![PowerShell](https://img.shields.io/badge/PowerShell-7.2+-5391FE?logo=powershell)
 ![Microsoft Graph](https://img.shields.io/badge/Microsoft-Graph-0078D4)
-![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
 ![Version](https://img.shields.io/badge/Version-v0.3.0-success)
 
 ---
