@@ -11,26 +11,96 @@ function Get-M365LicenseStatistics {
 
     )
 
-    # License Totals
+    # ============================================================
+    # License Categories
+    # ============================================================
 
-    $TotalPurchased = ($LicenseSummary |
+    $CoreLicenses = $LicenseSummary |
+        Where-Object {
+            $_.Category -eq 'Core' -and
+            $_.Total -gt 0
+        }
+
+    $CommunicationLicenses = $LicenseSummary |
+        Where-Object {
+            $_.Category -eq 'Communication'
+        }
+
+    $AddOnLicenses = $LicenseSummary |
+        Where-Object {
+            $_.Category -eq 'AddOn'
+        }
+
+    $TrialLicenses = $LicenseSummary |
+        Where-Object {
+            $_.Category -eq 'Trial'
+        }
+
+    $FreeLicenses = $LicenseSummary |
+        Where-Object {
+            $_.Category -eq 'Free'
+        }
+
+    $CapacityLicenses = $LicenseSummary |
+        Where-Object {
+            $_.Category -eq 'Capacity'
+        }
+
+    # ============================================================
+    # Core License Statistics
+    # ============================================================
+
+    $TotalPurchased = ($CoreLicenses |
         Measure-Object -Property Total -Sum).Sum
 
-    $TotalAssigned = ($LicenseSummary |
+    $TotalAssigned = ($CoreLicenses |
         Measure-Object -Property Assigned -Sum).Sum
 
-    $TotalAvailable = ($LicenseSummary |
+    $TotalAvailable = ($CoreLicenses |
         Measure-Object -Property Available -Sum).Sum
 
-    # User Totals
+    # ============================================================
+    # Category Statistics
+    # ============================================================
+
+    $CoreLicenseTypes = $CoreLicenses.Count
+
+    $CommunicationLicenseTypes = $CommunicationLicenses.Count
+
+    $AddOnLicenseTypes = $AddOnLicenses.Count
+
+    $TrialLicenseTypes = $TrialLicenses.Count
+
+    $FreeLicenseTypes = $FreeLicenses.Count
+
+    $CapacityLicenseTypes = $CapacityLicenses.Count
+
+    $CommunicationPurchased = ($CommunicationLicenses |
+        Measure-Object -Property Total -Sum).Sum
+
+    $AddOnPurchased = ($AddOnLicenses |
+        Measure-Object -Property Total -Sum).Sum
+
+    $TrialPurchased = ($TrialLicenses |
+        Measure-Object -Property Total -Sum).Sum
+
+    $FreePurchased = ($FreeLicenses |
+        Measure-Object -Property Total -Sum).Sum
+
+    $CapacityPurchased = ($CapacityLicenses |
+        Measure-Object -Property Total -Sum).Sum
+
+    # ============================================================
+    # User Statistics
+    # ============================================================
 
     $TotalUsers = $UserData.Count
 
     $InternalUsers = ($UserData |
-        Where-Object { $_.IsInternal }).Count
+        Where-Object IsInternal).Count
 
     $GuestUsers = ($UserData |
-        Where-Object { $_.IsGuest }).Count
+        Where-Object IsGuest).Count
 
     $LicensedUsers = ($UserData |
         Where-Object {
@@ -42,7 +112,10 @@ function Get-M365LicenseStatistics {
             $_.IsInternal -and -not $_.Licensed
         }).Count
 
+    # ============================================================
     # License Utilization
+    # (Core Licenses Only)
+    # ============================================================
 
     if ($TotalPurchased -gt 0) {
 
@@ -58,17 +131,75 @@ function Get-M365LicenseStatistics {
 
     }
 
-    # Statistics Object
+    # ============================================================
+    # Report Statistics
+    # ============================================================
 
     [PSCustomObject]@{
 
+        #
+        # Overall
+        #
+
         TotalLicenseTypes          = $LicenseSummary.Count
+
+        #
+        # Core
+        #
+
+        CoreLicenseTypes           = $CoreLicenseTypes
 
         TotalPurchased             = $TotalPurchased
 
         TotalAssigned              = $TotalAssigned
 
         TotalAvailable             = $TotalAvailable
+
+        LicenseUtilizationPercent  = $LicenseUtilizationPercent
+
+        #
+        # Teams & Communication
+        #
+
+        CommunicationLicenseTypes  = $CommunicationLicenseTypes
+
+        CommunicationPurchased     = $CommunicationPurchased
+
+        #
+        # Other Add-ons
+        #
+
+        AddOnLicenseTypes          = $AddOnLicenseTypes
+
+        AddOnPurchased             = $AddOnPurchased
+
+        #
+        # Trial
+        #
+
+        TrialLicenseTypes          = $TrialLicenseTypes
+
+        TrialPurchased             = $TrialPurchased
+
+        #
+        # Free
+        #
+
+        FreeLicenseTypes           = $FreeLicenseTypes
+
+        FreePurchased              = $FreePurchased
+
+        #
+        # Capacity
+        #
+
+        CapacityLicenseTypes       = $CapacityLicenseTypes
+
+        CapacityPurchased          = $CapacityPurchased
+
+        #
+        # Users
+        #
 
         TotalUsers                 = $TotalUsers
 
@@ -79,8 +210,6 @@ function Get-M365LicenseStatistics {
         LicensedUsers              = $LicensedUsers
 
         UnlicensedUsers            = $UnlicensedUsers
-
-        LicenseUtilizationPercent  = $LicenseUtilizationPercent
 
     }
 

@@ -67,6 +67,9 @@ function New-M365LicenseReport {
             -LicenseSummary $Summary `
             -UserData $UserData
 
+        $Health = Get-M365LicenseHealth `
+            -Statistics $Statistics
+
         Write-Verbose "Identifying unlicensed users..."
 
         $UnlicensedUsers = Get-M365UnlicensedUsers `
@@ -99,6 +102,8 @@ function New-M365LicenseReport {
             Users             = $UserData
 
             UnlicensedUsers   = $UnlicensedUsers
+
+            Health            = $Health
 
         }
 

@@ -9,13 +9,10 @@ function Get-M365LicenseUserData {
         -All `
         -Property DisplayName,UserPrincipalName,AssignedLicenses,Department,AccountEnabled,UserType
 
-    Write-Host "Users returned by Graph: $($Users.Count)" -ForegroundColor Cyan
-
+    
     foreach ($User in $Users) {
 
-        Write-Host "Processing $($User.UserPrincipalName)" -ForegroundColor Yellow
-
-        [PSCustomObject]@{
+            [PSCustomObject]@{
 
             DisplayName       = $User.DisplayName
             UserPrincipalName = $User.UserPrincipalName

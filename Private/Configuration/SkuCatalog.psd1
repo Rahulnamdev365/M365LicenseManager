@@ -967,4 +967,13 @@
     DisplayName = 'Microsoft 365 F3'
     }
 
+    MCOPSTNC = @{
+    DisplayName = 'Communications Credits'
+    }
+
+    
+    MCOPSTN_5 = @{
+    DisplayName = 'Microsoft 365 Domestic Calling Plan (120 min)'
+    }
+
 }

@@ -1,0 +1,381 @@
+body{
+    font-family:"Segoe UI",Arial,sans-serif;
+    background:#f3f4f6;
+    margin:0;
+    padding:30px;
+    color:#333;
+}
+
+.container{
+    max-width:1400px;
+    margin:auto;
+}
+
+header{
+    margin-bottom:30px;
+}
+
+h1{
+    color:#0078D4;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    color:#666;
+}
+
+h2{
+    margin-top:40px;
+    color:#333;
+    border-bottom:2px solid #0078D4;
+    padding-bottom:8px;
+}
+
+.card-container{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:20px;
+
+    margin-bottom:30px;
+
+}
+
+@media(max-width:1000px){
+
+    .card-container{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:650px){
+
+    .card-container{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+.card{
+
+    background:#FFFFFF;
+
+    border-radius:14px;
+
+    padding:22px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    transition:all .25s ease;
+
+    min-height:135px;
+
+}
+
+.card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 12px 24px rgba(0,0,0,.12);
+
+}
+
+.card h3{
+
+    margin:0;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    color:#6B7280;
+
+}
+
+.card p{
+
+    margin-top:18px;
+
+    font-size:40px;
+
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+.purchased{border-left:6px solid #2563EB;}
+.communication{border-left:6px solid #06B6D4;}
+.addon{border-left:6px solid #DB2777;}
+.trial{border-left:6px solid #F59E0B;}
+.free{border-left:6px solid #16A34A;}
+.utilization{border-left:6px solid #DC2626;}
+
+.users{border-left:6px solid #2563EB;}
+.internal{border-left:6px solid #059669;}
+.guest{border-left:6px solid #8B5CF6;}
+.licensed{border-left:6px solid #14B8A6;}
+.unlicensed{border-left:6px solid #DC2626;}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin-top:20px;
+
+    background:#FFFFFF;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+
+}
+
+th{
+    background:#0078D4;
+    color:white;
+    padding:12px;
+    text-align:left;
+    position:sticky;
+    top:0;
+}
+
+td{
+
+    padding:14px;
+
+    border-bottom:1px solid #E5E7EB;
+
+}
+
+tr:nth-child(even){
+    background:#fafafa;
+}
+
+tr:hover{
+    background:#eef6ff;
+}
+
+.warning{
+    background:#FFF7D6 !important;
+}
+
+.critical{
+    background:#FFE3E3 !important;
+}
+
+.inventory-table{
+    margin-top:20px;
+}
+
+.inventory-table td{
+    vertical-align:middle;
+}
+
+#licenseSearch{
+
+    width:380px;
+
+    max-width:100%;
+
+    padding:12px 14px;
+
+    margin-top:15px;
+
+    margin-bottom:20px;
+
+    border:1px solid #CBD5E1;
+
+    border-radius:8px;
+
+    font-size:14px;
+
+    transition:.2s;
+
+}
+
+#licenseSearch:focus{
+
+    outline:none;
+
+    border-color:#0F6CBD;
+
+    box-shadow:0 0 0 3px rgba(15,108,189,.15);
+
+}
+
+/* ---------- Category Badges ---------- */
+
+.badge{
+
+    display:inline-block;
+    padding:5px 12px;
+    border-radius:20px;
+    color:white;
+    font-size:12px;
+    font-weight:600;
+    text-align:center;
+    min-width:70px;
+
+}
+
+.badge.trial{
+    background:#F59E0B;
+}
+
+.badge.capacity{
+    background:#7C3AED;
+}
+
+.badge.addon{
+    background:#DB2777;
+}
+
+.badge.unknown{
+    background:#6B7280;
+}
+
+/* ---------- Progress Bars ---------- */
+
+.progress{
+
+    background:#E5E7EB;
+    border-radius:20px;
+    height:22px;
+    overflow:hidden;
+    min-width:180px;
+
+}
+
+.progress-bar{
+
+    color:white;
+    text-align:center;
+    height:22px;
+    line-height:22px;
+    font-size:12px;
+    font-weight:bold;
+
+}
+
+.progress-bar.low{
+
+    background:#10B981;
+
+}
+
+.progress-bar.medium{
+
+    background:#F59E0B;
+
+}
+
+.progress-bar.high{
+
+    background:#DC2626;
+
+}
+
+/* ---------- Footer ---------- */
+
+footer{
+
+    margin-top:40px;
+    text-align:center;
+    color:#666;
+    font-size:13px;
+
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width:900px){
+
+.card-container{
+
+    flex-direction:column;
+
+}
+
+.progress{
+
+    min-width:120px;
+
+}
+
+}
+
+/* Executive Insights */
+
+ul{
+
+    background:white;
+
+    padding:20px 30px;
+
+    border-radius:10px;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+}
+
+ul li{
+
+    margin-bottom:12px;
+
+    font-size:15px;
+
+}
+
+.badge.core{
+
+    background:#2563EB;
+
+}
+
+.badge.communication{
+
+    background:#06B6D4;
+
+}
+
+.badge.addon{
+
+    background:#DB2777;
+
+}
+
+.badge.trial{
+
+    background:#F59E0B;
+
+}
+
+.badge.free{
+
+    background:#16A34A;
+
+}
+
+.badge.capacity{
+
+    background:#7C3AED;
+
+}
+
+.badge.unknown{
+
+    background:#6B7280;
+
+}

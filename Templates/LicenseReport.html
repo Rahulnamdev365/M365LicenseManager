@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Microsoft 365 License Report</title>
+
+    <style>
+{{CSS}}
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ========================================================= -->
+    <!-- Header -->
+    <!-- ========================================================= -->
+
+    <header>
+
+        <h1>Microsoft 365 License Report</h1>
+
+        <p class="subtitle">
+
+            Generated on {{GeneratedOn}}
+
+        </p>
+
+    </header>
+
+    <!-- ========================================================= -->
+    <!-- Executive Summary -->
+    <!-- ========================================================= -->
+
+    <section>
+
+        <h2>Executive Summary</h2>
+
+        <div class="card-container">
+
+            <div class="card purchased">
+
+                <h3>Core Licenses</h3>
+
+                <p>{{TotalPurchased}}</p>
+
+            </div>
+
+            <div class="card communication">
+
+                <h3>Teams &amp; Communication</h3>
+
+                <p>{{CommunicationPurchased}}</p>
+
+            </div>
+
+            <div class="card addon">
+
+                <h3>Other Add-ons</h3>
+
+                <p>{{AddOnPurchased}}</p>
+
+            </div>
+
+            <div class="card trial">
+
+                <h3>Trial Licenses</h3>
+
+                <p>{{TrialPurchased}}</p>
+
+            </div>
+
+            <div class="card free">
+
+                <h3>Free Licenses</h3>
+
+                <p>{{FreePurchased}}</p>
+
+            </div>
+
+            <div class="card utilization">
+
+                <h3>Core Utilization</h3>
+
+                <p>{{LicenseUtilizationPercent}}</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- User Statistics -->
+    <!-- ========================================================= -->
+
+    <section>
+
+        <h2>User Statistics</h2>
+
+        <div class="card-container">
+
+            <div class="card users">
+
+                <h3>Total Users</h3>
+
+                <p>{{TotalUsers}}</p>
+
+            </div>
+
+            <div class="card internal">
+
+                <h3>Internal Users</h3>
+
+                <p>{{InternalUsers}}</p>
+
+            </div>
+
+            <div class="card guest">
+
+                <h3>Guest Users</h3>
+
+                <p>{{GuestUsers}}</p>
+
+            </div>
+
+            <div class="card licensed">
+
+                <h3>Licensed Users</h3>
+
+                <p>{{LicensedUsers}}</p>
+
+            </div>
+
+            <div class="card unlicensed">
+
+                <h3>Unlicensed Users</h3>
+
+                <p>{{UnlicensedUsers}}</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- Tenant Information -->
+    <!-- ========================================================= -->
+
+    <section>
+
+        <h2>Tenant Information</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th style="width:30%">Property</th>
+
+                    <th>Value</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+
+                    <td>Account</td>
+
+                    <td>{{Account}}</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Tenant ID</td>
+
+                    <td>{{TenantId}}</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Environment</td>
+
+                    <td>{{Environment}}</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Module Version</td>
+
+                    <td>{{ModuleVersion}}</td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- Executive Insights -->
+    <!-- ========================================================= -->
+
+    <section>
+
+        <h2>Executive Insights</h2>
+
+        {{ExecutiveInsights}}
+
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- License Inventory -->
+    <!-- ========================================================= -->
+
+    <section>
+
+        <h2>License Inventory</h2>
+
+        <input
+            type="text"
+            id="licenseSearch"
+            placeholder="Search by license name..."
+            onkeyup="filterTable()">
+
+        {{LicenseInventoryTable}}
+
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- Footer -->
+    <!-- ========================================================= -->
+
+    <footer>
+
+        <hr>
+
+        <p>
+
+            <strong>M365LicenseManager</strong>
+
+            &nbsp;|&nbsp;
+
+            Version {{ModuleVersion}}
+
+        </p>
+
+        <p>
+
+            Powered by Microsoft Graph PowerShell SDK
+
+        </p>
+
+    </footer>
+
+</div>
+
+<script>
+
+function filterTable() {
+
+    const input = document.getElementById("licenseSearch");
+    const filter = input.value.toUpperCase();
+
+    const table = document.querySelector(".inventory-table");
+
+    if (!table)
+        return;
+
+    const rows = table.getElementsByTagName("tr");
+
+    for (let i = 1; i < rows.length; i++) {
+
+        const cell = rows[i].getElementsByTagName("td")[1];
+
+        if (!cell)
+            continue;
+
+        const text = cell.textContent || cell.innerText;
+
+        rows[i].style.display =
+            text.toUpperCase().includes(filter)
+            ? ""
+            : "none";
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>
