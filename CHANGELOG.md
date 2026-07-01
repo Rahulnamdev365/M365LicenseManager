@@ -6,6 +6,18 @@ This project follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.4.0] - 2026-07-01
+
+### Added
+- Added New-M365LicenseReport cmdlet.
+- Added Get-M365LicenseSummary helper.
+- Added Get-M365LicenseStatistics helper.
+- Added Get-M365LicenseUserData helper.
+- Added Get-M365UnlicensedUsers helper.
+- Added license utilization statistics.
+- Added user and guest statistics.
+- Added report metadata including module version and environment.
+
 ## [0.3.0] - 2026-06-30
 
 ### Added

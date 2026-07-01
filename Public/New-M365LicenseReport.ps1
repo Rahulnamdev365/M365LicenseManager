@@ -2,29 +2,31 @@ function New-M365LicenseReport {
 
     <#
     .SYNOPSIS
-        Generates a Microsoft 365 license report.
+        Generates a Microsoft 365 License Report.
 
     .DESCRIPTION
         Collects Microsoft 365 licensing information and returns a report object
-        containing tenant information, license inventory, statistics, user data,
-        and unlicensed users.
+        containing tenant information, license inventory, statistics,
+        user information, and unlicensed users.
 
-        HTML export support will be available when the HTML renderer is completed.
+        HTML report generation is supported through the Html output type.
 
     .PARAMETER OutputType
-        Specifies the output format.
+        Specifies the report output format.
 
-        Object - Returns a PowerShell object (Default)
-        Html   - Generates an HTML report
+        Object - Returns a PowerShell object.
+        Html   - Generates an HTML report.
 
     .PARAMETER OutputPath
-        Folder where the HTML report will be saved.
+        Destination folder for the HTML report.
 
     .EXAMPLE
         New-M365LicenseReport
 
     .EXAMPLE
-        New-M365LicenseReport -OutputType Html -OutputPath C:\Reports
+        New-M365LicenseReport `
+            -OutputType Html `
+            -OutputPath C:\Reports
 
     .NOTES
         Author  : Rahul Namdev
@@ -35,7 +37,7 @@ function New-M365LicenseReport {
     param(
 
         [Parameter()]
-        [ValidateSet('Object', 'Html')]
+        [ValidateSet('Object','Html')]
         [string]$OutputType = 'Object',
 
         [Parameter()]
@@ -55,14 +57,15 @@ function New-M365LicenseReport {
 
         $Summary = Get-M365LicenseSummary
 
-        Write-Verbose "Calculating license statistics..."
-
-        $Statistics = Get-M365LicenseStatistics `
-            -LicenseSummary $Summary
-
         Write-Verbose "Collecting user information..."
 
         $UserData = Get-M365LicenseUserData
+
+        Write-Verbose "Calculating license statistics..."
+
+        $Statistics = Get-M365LicenseStatistics `
+            -LicenseSummary $Summary `
+            -UserData $UserData
 
         Write-Verbose "Identifying unlicensed users..."
 
@@ -124,8 +127,8 @@ function New-M365LicenseReport {
                     -Report $Report
 
                 $ReportFile = Join-Path `
-                    $OutputPath `
-                    "LicenseReport.html"
+                    -Path $OutputPath `
+                    -ChildPath 'LicenseReport.html'
 
                 $Html | Out-File `
                     -FilePath $ReportFile `
