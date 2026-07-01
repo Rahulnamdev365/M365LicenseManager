@@ -15,7 +15,12 @@ function New-M365LicenseReport {
         Specifies the report output format.
 
         Object - Returns a PowerShell object.
-        Html   - Generates an HTML report.
+        Html   - Generates an interactive HTML report.
+        Json   - Generates a JSON report suitable for automation, Power BI, Logic Apps and archival.
+
+        New-M365LicenseReport `
+             -OutputType Json `
+             -OutputPath C:\Reports
 
     .PARAMETER OutputPath
         Destination folder for the HTML report.
@@ -37,7 +42,7 @@ function New-M365LicenseReport {
     param(
 
         [Parameter()]
-        [ValidateSet('Object','Html')]
+        [ValidateSet('Object','Html','Json','Excel')]
         [string]$OutputType = 'Object',
 
         [Parameter()]
@@ -142,6 +147,46 @@ function New-M365LicenseReport {
                 Write-Verbose "Report saved to '$ReportFile'."
 
                 Get-Item $ReportFile
+
+            }
+
+            'Json' {
+
+            Write-Verbose "Generating JSON report..."
+
+            if (-not (Test-Path $OutputPath)) {
+
+                New-Item `
+                    -ItemType Directory `
+                    -Path $OutputPath `
+                    -Force | Out-Null
+
+            }
+
+            $Json = ConvertTo-LicenseJson `
+                -Report $Report
+
+            $ReportFile = Join-Path `
+                -Path $OutputPath `
+                -ChildPath "LicenseReport.json"
+
+            $Json | Out-File `
+                -FilePath $ReportFile `
+                -Encoding UTF8
+
+            Write-Verbose "Report saved to '$ReportFile'."
+
+            Get-Item $ReportFile
+
+            }
+
+            'Excel' {
+
+                Write-Verbose "Generating Excel report..."
+
+                ConvertTo-LicenseExcel `
+                    -Report $Report `
+                    -OutputPath $OutputPath
 
             }
 

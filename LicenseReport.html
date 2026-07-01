@@ -1,0 +1,2891 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Microsoft 365 License Report</title>
+
+    <style>
+body{
+    font-family:"Segoe UI",Arial,sans-serif;
+    background:#f3f4f6;
+    margin:0;
+    padding:30px;
+    color:#333;
+}
+
+.container{
+    max-width:1400px;
+    margin:auto;
+}
+
+header{
+    margin-bottom:30px;
+}
+
+h1{
+    color:#0078D4;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    color:#666;
+}
+
+h2{
+    margin-top:40px;
+    color:#333;
+    border-bottom:2px solid #0078D4;
+    padding-bottom:8px;
+}
+
+.card-container{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:20px;
+
+    margin-bottom:30px;
+
+}
+
+@media(max-width:1000px){
+
+    .card-container{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:650px){
+
+    .card-container{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+.card{
+
+    background:#FFFFFF;
+
+    border-radius:14px;
+
+    padding:22px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    transition:all .25s ease;
+
+    min-height:135px;
+
+}
+
+.card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 12px 24px rgba(0,0,0,.12);
+
+}
+
+.card h3{
+
+    margin:0;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    color:#6B7280;
+
+}
+
+.card p{
+
+    margin-top:18px;
+
+    font-size:40px;
+
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+.purchased{border-left:6px solid #2563EB;}
+.communication{border-left:6px solid #06B6D4;}
+.addon{border-left:6px solid #DB2777;}
+.trial{border-left:6px solid #F59E0B;}
+.free{border-left:6px solid #16A34A;}
+.utilization{border-left:6px solid #DC2626;}
+
+.users{border-left:6px solid #2563EB;}
+.internal{border-left:6px solid #059669;}
+.guest{border-left:6px solid #8B5CF6;}
+.licensed{border-left:6px solid #14B8A6;}
+.unlicensed{border-left:6px solid #DC2626;}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin-top:20px;
+
+    background:#FFFFFF;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+
+}
+
+th{
+    background:#0078D4;
+    color:white;
+    padding:12px;
+    text-align:left;
+    position:sticky;
+    top:0;
+}
+
+td{
+
+    padding:14px;
+
+    border-bottom:1px solid #E5E7EB;
+
+}
+
+tr:nth-child(even){
+    background:#fafafa;
+}
+
+tr:hover{
+    background:#eef6ff;
+}
+
+.warning{
+    background:#FFF7D6 !important;
+}
+
+.critical{
+    background:#FFE3E3 !important;
+}
+
+.inventory-table{
+    margin-top:20px;
+}
+
+.inventory-table td{
+    vertical-align:middle;
+}
+
+#licenseSearch{
+
+    width:380px;
+
+    max-width:100%;
+
+    padding:12px 14px;
+
+    margin-top:15px;
+
+    margin-bottom:20px;
+
+    border:1px solid #CBD5E1;
+
+    border-radius:8px;
+
+    font-size:14px;
+
+    transition:.2s;
+
+}
+
+#licenseSearch:focus{
+
+    outline:none;
+
+    border-color:#0F6CBD;
+
+    box-shadow:0 0 0 3px rgba(15,108,189,.15);
+
+}
+
+/* ---------- Category Badges ---------- */
+
+.badge{
+
+    display:inline-block;
+    padding:5px 12px;
+    border-radius:20px;
+    color:white;
+    font-size:12px;
+    font-weight:600;
+    text-align:center;
+    min-width:70px;
+
+}
+
+.badge.trial{
+    background:#F59E0B;
+}
+
+.badge.capacity{
+    background:#7C3AED;
+}
+
+.badge.addon{
+    background:#DB2777;
+}
+
+.badge.unknown{
+    background:#6B7280;
+}
+
+/* ---------- Progress Bars ---------- */
+
+.progress{
+
+    background:#E5E7EB;
+    border-radius:20px;
+    height:22px;
+    overflow:hidden;
+    min-width:180px;
+
+}
+
+.progress-bar{
+
+    color:white;
+    text-align:center;
+    height:22px;
+    line-height:22px;
+    font-size:12px;
+    font-weight:bold;
+
+}
+
+.progress-bar.low{
+
+    background:#10B981;
+
+}
+
+.progress-bar.medium{
+
+    background:#F59E0B;
+
+}
+
+.progress-bar.high{
+
+    background:#DC2626;
+
+}
+
+/* ---------- Footer ---------- */
+
+footer{
+
+    margin-top:40px;
+    text-align:center;
+    color:#666;
+    font-size:13px;
+
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width:900px){
+
+.card-container{
+
+    flex-direction:column;
+
+}
+
+.progress{
+
+    min-width:120px;
+
+}
+
+}
+
+/* Executive Insights */
+
+ul{
+
+    background:white;
+
+    padding:20px 30px;
+
+    border-radius:10px;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+}
+
+ul li{
+
+    margin-bottom:12px;
+
+    font-size:15px;
+
+}
+
+.badge.core{
+
+    background:#2563EB;
+
+}
+
+.badge.communication{
+
+    background:#06B6D4;
+
+}
+
+.badge.addon{
+
+    background:#DB2777;
+
+}
+
+.badge.trial{
+
+    background:#F59E0B;
+
+}
+
+.badge.free{
+
+    background:#16A34A;
+
+}
+
+.badge.capacity{
+
+    background:#7C3AED;
+
+}
+
+.badge.unknown{
+
+    background:#6B7280;
+
+}
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ========================================================= -->
+    <!-- Header -->
+    <!-- ========================================================= -->
+
+    <header>
+
+        <h1>Microsoft 365 License Report</h1>
+
+        <p class="subtitle">
+
+            Generated on 2026-07-01 16:49:29
+
+        </p>
+
+    </header>
+
+    <!-- ========================================================= -->
+    <!-- Executive Summary -->
+    <!-- ========================================================= -->
+
+    <section>
+
+        <h2>Executive Summary</h2>
+
+        <div class="card-container">
+
+            <div class="card purchased">
+
+                <h3>Core Licenses</h3>
+
+                <p>7,492</p>
+
+            </div>
+
+            <div class="card communication">
+
+                <h3>Teams &amp; Communication</h3>
+
+                <p>1,00,00,572</p>
+
+            </div>
+
+            <div class="card addon">
+
+                <h3>Other Add-ons</h3>
+
+                <p>30,96,751</p>
+
+            </div>
+
+            <div class="card trial">
+
+                <h3>Trial Licenses</h3>
+
+                <p>90,000</p>
+
+            </div>
+
+            <div class="card free">
+
+                <h3>Free Licenses</h3>
+
+                <p>30,100</p>
+
+            </div>
+
+            <div class="card utilization">
+
+                <h3>Core Utilization</h3>
+
+                <p>85.42%</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- User Statistics -->
+    <!-- ========================================================= -->
+
+    <section>
+
+        <h2>User Statistics</h2>
+
+        <div class="card-container">
+
+            <div class="card users">
+
+                <h3>Total Users</h3>
+
+                <p>14,454</p>
+
+            </div>
+
+            <div class="card internal">
+
+                <h3>Internal Users</h3>
+
+                <p>11,397</p>
+
+            </div>
+
+            <div class="card guest">
+
+                <h3>Guest Users</h3>
+
+                <p>3,057</p>
+
+            </div>
+
+            <div class="card licensed">
+
+                <h3>Licensed Users</h3>
+
+                <p>7,172</p>
+
+            </div>
+
+            <div class="card unlicensed">
+
+                <h3>Unlicensed Users</h3>
+
+                <p>4,225</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- Tenant Information -->
+    <!-- ========================================================= -->
+
+    <section>
+
+        <h2>Tenant Information</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th style="width:30%">Property</th>
+
+                    <th>Value</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+
+                    <td>Account</td>
+
+                    <td>AzAdmin-EXTRANA@ecco.onmicrosoft.com</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Tenant ID</td>
+
+                    <td>06152121-b4c5-4544-abf5-9268e75db448</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Environment</td>
+
+                    <td>Global</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Module Version</td>
+
+                    <td>0.6.0</td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- Executive Insights -->
+    <!-- ========================================================= -->
+
+    <section>
+
+        <h2>Executive Insights</h2>
+
+        <ul><li>🟡 Core license utilization is 85.42%. Consider reviewing available licenses.</li><li>🟠 9 trial subscription(s) detected.</li><li>🟣 44 paid add-on subscription(s) detected.</li><li>🔷 Capacity subscriptions detected and excluded from Core License calculations.</li><li>👥 3057 guest user(s) excluded from licensing statistics.</li><li>⚠ 4225 internal user(s) currently do not have a license.</li></ul>
+
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- License Inventory -->
+    <!-- ========================================================= -->
+
+    <section>
+
+        <h2>License Inventory</h2>
+
+        <input
+            type="text"
+            id="licenseSearch"
+            placeholder="Search by license name..."
+            onkeyup="filterTable()">
+
+        
+<table class='inventory-table'>
+
+<thead>
+
+<tr>
+
+<th>Category</th>
+
+<th>License</th>
+
+<th>Purchased</th>
+
+<th>Assigned</th>
+
+<th>Available</th>
+
+<th>Utilization</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr class=''>
+
+<td><span class='badge trial'>Trial</span></td>
+
+<td>AX7_USER_TRIAL</td>
+
+<td>10,000</td>
+
+<td>3</td>
+
+<td>9,997</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge free'>Free</span></td>
+
+<td>Business Apps (free)</td>
+
+<td>100</td>
+
+<td>4</td>
+
+<td>96</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:4%;'>
+
+4%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge capacity'>Capacity</span></td>
+
+<td>CDS_DB_CAPACITY</td>
+
+<td>153</td>
+
+<td>0</td>
+
+<td>153</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge capacity'>Capacity</span></td>
+
+<td>CDS_FILE_CAPACITY</td>
+
+<td>1</td>
+
+<td>0</td>
+
+<td>1</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge capacity'>Capacity</span></td>
+
+<td>CDS_LOG_CAPACITY</td>
+
+<td>1</td>
+
+<td>0</td>
+
+<td>1</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge communication'>Teams Add-on</span></td>
+
+<td>Command Area Phone</td>
+
+<td>36</td>
+
+<td>29</td>
+
+<td>7</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar medium'
+style='width:80.6%;'>
+
+80.6%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge communication'>Teams Add-on</span></td>
+
+<td>Communications Credits</td>
+
+<td>1,00,00,000</td>
+
+<td>2</td>
+
+<td>99,99,998</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>D365_CUSTOMER_SERVICE_ENT_ATTACH</td>
+
+<td>1</td>
+
+<td>0</td>
+
+<td>1</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge capacity'>Capacity</span></td>
+
+<td>D365_Operations_Enterprise_Storage_v2</td>
+
+<td>1</td>
+
+<td>0</td>
+
+<td>1</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>DYN365_BUSCENTRAL_DEVICE</td>
+
+<td>4</td>
+
+<td>0</td>
+
+<td>4</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='critical'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>DYN365_BUSCENTRAL_ESSENTIAL</td>
+
+<td>6</td>
+
+<td>6</td>
+
+<td>0</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar high'
+style='width:100%;'>
+
+100%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>DYN365_BUSCENTRAL_TEAM_MEMBER</td>
+
+<td>1</td>
+
+<td>0</td>
+
+<td>1</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>DYN365_BUSINESS_MARKETING</td>
+
+<td>10,000</td>
+
+<td>1</td>
+
+<td>9,999</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='critical'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>DYN365_CS_CHAT</td>
+
+<td>1</td>
+
+<td>1</td>
+
+<td>0</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar high'
+style='width:100%;'>
+
+100%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>DYN365_CS_MESSAGING</td>
+
+<td>1</td>
+
+<td>0</td>
+
+<td>1</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>DYN365_FINANCE</td>
+
+<td>107</td>
+
+<td>102</td>
+
+<td>5</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar high'
+style='width:95.3%;'>
+
+95.3%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>DYN365_FINANCE_ATTACH</td>
+
+<td>1</td>
+
+<td>0</td>
+
+<td>1</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>DYN365_FINANCIALS_ACCOUNTANT_SKU</td>
+
+<td>1</td>
+
+<td>0</td>
+
+<td>1</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Dyn365_Operations_Activity</td>
+
+<td>26</td>
+
+<td>0</td>
+
+<td>26</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>DYN365_REGULATORY_SERVICE</td>
+
+<td>10,000</td>
+
+<td>3</td>
+
+<td>9,997</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>DYN365_RETAIL</td>
+
+<td>219</td>
+
+<td>200</td>
+
+<td>19</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar high'
+style='width:91.3%;'>
+
+91.3%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>DYN365_RETAIL_ATTACH</td>
+
+<td>79</td>
+
+<td>24</td>
+
+<td>55</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:30.4%;'>
+
+30.4%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='critical'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>DYN365_SCM</td>
+
+<td>1</td>
+
+<td>1</td>
+
+<td>0</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar high'
+style='width:100%;'>
+
+100%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>DYN365_SCM_ATTACH</td>
+
+<td>18</td>
+
+<td>9</td>
+
+<td>9</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:50%;'>
+
+50%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>DYN365_TEAM_MEMBERS</td>
+
+<td>151</td>
+
+<td>20</td>
+
+<td>131</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:13.2%;'>
+
+13.2%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge trial'>Trial</span></td>
+
+<td>Dynamics 365 AI for Customer Service Virtual Agents Viral SKU</td>
+
+<td>10,000</td>
+
+<td>37</td>
+
+<td>9,963</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0.4%;'>
+
+0.4%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Dynamics 365 for Customer Service Enterprise Edition</td>
+
+<td>100</td>
+
+<td>99</td>
+
+<td>1</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar high'
+style='width:99%;'>
+
+99%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Dynamics 365 for Financials for IWs</td>
+
+<td>10,000</td>
+
+<td>0</td>
+
+<td>10,000</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='critical'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Dynamics 365 Remote Assist</td>
+
+<td>1</td>
+
+<td>1</td>
+
+<td>0</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar high'
+style='width:100%;'>
+
+100%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>DYNAMICS_365_CONTACT_CENTER_ADD_ON_FOR_CUSTOMER_SERVICE_ENTERPRISE</td>
+
+<td>20</td>
+
+<td>0</td>
+
+<td>20</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge trial'>Trial</span></td>
+
+<td>Dynamics_365_Customer_Service_Enterprise_viral_trial</td>
+
+<td>10,000</td>
+
+<td>4</td>
+
+<td>9,996</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Dynamics_365_e_Commerce_Tier_1_Band_1</td>
+
+<td>1</td>
+
+<td>0</td>
+
+<td>1</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge trial'>Trial</span></td>
+
+<td>Dynamics_365_Field_Service_Enterprise_viral_trial</td>
+
+<td>10,000</td>
+
+<td>1</td>
+
+<td>9,999</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Dynamics_365_for_Operations_Devices</td>
+
+<td>879</td>
+
+<td>0</td>
+
+<td>879</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Dynamics_365_for_Operations_Sandbox_Tier2_SKU</td>
+
+<td>5</td>
+
+<td>0</td>
+
+<td>5</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge trial'>Trial</span></td>
+
+<td>Dynamics_365_Intelligent_Order_Management_vTrial</td>
+
+<td>10,000</td>
+
+<td>2</td>
+
+<td>9,998</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge trial'>Trial</span></td>
+
+<td>Dynamics_365_Sales_Premium_Viral_Trial</td>
+
+<td>10,000</td>
+
+<td>4</td>
+
+<td>9,996</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Enterprise Mobility + Security E5</td>
+
+<td>4</td>
+
+<td>1</td>
+
+<td>3</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:25%;'>
+
+25%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='critical'>
+
+<td><span class='badge core'>Core</span></td>
+
+<td>Exchange Online Plan 2</td>
+
+<td>2</td>
+
+<td>2</td>
+
+<td>0</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar high'
+style='width:100%;'>
+
+100%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>FORMS_PRO</td>
+
+<td>10,00,000</td>
+
+<td>0</td>
+
+<td>10,00,000</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge communication'>Teams Add-on</span></td>
+
+<td>Microsoft 365 Domestic Calling Plan (120 min)</td>
+
+<td>7</td>
+
+<td>5</td>
+
+<td>2</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar medium'
+style='width:71.4%;'>
+
+71.4%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge core'>Core</span></td>
+
+<td>Microsoft 365 E5</td>
+
+<td>4,510</td>
+
+<td>4,420</td>
+
+<td>90</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar high'
+style='width:98%;'>
+
+98%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge core'>Core</span></td>
+
+<td>Microsoft 365 F3</td>
+
+<td>2,710</td>
+
+<td>1,733</td>
+
+<td>977</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:63.9%;'>
+
+63.9%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge free'>Free</span></td>
+
+<td>Microsoft Flow (Free)</td>
+
+<td>10,000</td>
+
+<td>4,019</td>
+
+<td>5,981</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:40.2%;'>
+
+40.2%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge free'>Free</span></td>
+
+<td>Microsoft Power Apps for Developer</td>
+
+<td>10,000</td>
+
+<td>104</td>
+
+<td>9,896</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:1%;'>
+
+1%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge free'>Free</span></td>
+
+<td>Microsoft PowerApps and Logic flows</td>
+
+<td>10,000</td>
+
+<td>3</td>
+
+<td>9,997</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Microsoft Stream</td>
+
+<td>10,00,000</td>
+
+<td>14</td>
+
+<td>9,99,986</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Microsoft_365_Copilot</td>
+
+<td>105</td>
+
+<td>104</td>
+
+<td>1</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar high'
+style='width:99%;'>
+
+99%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge trial'>Trial</span></td>
+
+<td>Microsoft_Copilot_for_Finance_trial</td>
+
+<td>10,000</td>
+
+<td>4</td>
+
+<td>9,996</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Microsoft_Copilot_for_Service</td>
+
+<td>10</td>
+
+<td>1</td>
+
+<td>9</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:10%;'>
+
+10%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='critical'>
+
+<td><span class='badge communication'>Teams Add-on</span></td>
+
+<td>Microsoft_Teams_Premium</td>
+
+<td>1</td>
+
+<td>1</td>
+
+<td>0</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar high'
+style='width:100%;'>
+
+100%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge communication'>Teams Add-on</span></td>
+
+<td>Microsoft_Teams_Rooms_Pro</td>
+
+<td>114</td>
+
+<td>99</td>
+
+<td>15</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar medium'
+style='width:86.8%;'>
+
+86.8%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge core'>Core</span></td>
+
+<td>Office 365 Exchange Online Only</td>
+
+<td>270</td>
+
+<td>245</td>
+
+<td>25</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar high'
+style='width:90.7%;'>
+
+90.7%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge communication'>Teams Add-on</span></td>
+
+<td>Operator_Connect_Mobile</td>
+
+<td>100</td>
+
+<td>0</td>
+
+<td>100</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>PBI_PREMIUM_PER_USER</td>
+
+<td>18</td>
+
+<td>16</td>
+
+<td>2</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar medium'
+style='width:88.9%;'>
+
+88.9%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge communication'>Teams Add-on</span></td>
+
+<td>PHONESYSTEM_VIRTUALUSER</td>
+
+<td>302</td>
+
+<td>213</td>
+
+<td>89</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar medium'
+style='width:70.5%;'>
+
+70.5%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge trial'>Trial</span></td>
+
+<td>Power_Pages_vTrial_for_Makers</td>
+
+<td>10,000</td>
+
+<td>6</td>
+
+<td>9,994</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0.1%;'>
+
+0.1%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Power-BI Standard</td>
+
+<td>10,00,000</td>
+
+<td>5,871</td>
+
+<td>9,94,129</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0.6%;'>
+
+0.6%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge trial'>Trial</span></td>
+
+<td>PowerApps (Free)</td>
+
+<td>10,000</td>
+
+<td>30</td>
+
+<td>9,970</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0.3%;'>
+
+0.3%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='critical'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>POWERAPPS_PER_USER</td>
+
+<td>33</td>
+
+<td>33</td>
+
+<td>0</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar high'
+style='width:100%;'>
+
+100%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>POWERAUTOMATE_ATTENDED_RPA</td>
+
+<td>15</td>
+
+<td>14</td>
+
+<td>1</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar high'
+style='width:93.3%;'>
+
+93.3%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>POWERAUTOMATE_UNATTENDED_RPA</td>
+
+<td>1</td>
+
+<td>0</td>
+
+<td>1</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Project Online Pro</td>
+
+<td>25</td>
+
+<td>15</td>
+
+<td>10</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:60%;'>
+
+60%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='critical'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>PROJECT_PLAN3_DEPT</td>
+
+<td>0</td>
+
+<td>0</td>
+
+<td>0</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>RMSBASIC</td>
+
+<td>1</td>
+
+<td>0</td>
+
+<td>1</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge capacity'>Capacity</span></td>
+
+<td>SharePoint Online Storage</td>
+
+<td>53,000</td>
+
+<td>0</td>
+
+<td>53,000</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='warning'>
+
+<td><span class='badge communication'>Teams Add-on</span></td>
+
+<td>Skype for Business Pstn Domestic and International Calling</td>
+
+<td>11</td>
+
+<td>9</td>
+
+<td>2</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar medium'
+style='width:81.8%;'>
+
+81.8%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>SPZA_IW</td>
+
+<td>10,000</td>
+
+<td>1</td>
+
+<td>9,999</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='critical'>
+
+<td><span class='badge communication'>Teams Add-on</span></td>
+
+<td>Teams_Premium_(for_Departments)</td>
+
+<td>1</td>
+
+<td>1</td>
+
+<td>0</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar high'
+style='width:100%;'>
+
+100%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='critical'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Visio Online Plan 2</td>
+
+<td>101</td>
+
+<td>101</td>
+
+<td>0</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar high'
+style='width:100%;'>
+
+100%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class='critical'>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>VISIO_PLAN2_DEPT</td>
+
+<td>0</td>
+
+<td>0</td>
+
+<td>0</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Windows Azure Rights Management</td>
+
+<td>50,000</td>
+
+<td>0</td>
+
+<td>50,000</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Windows Defender Advanced Threat Protection</td>
+
+<td>180</td>
+
+<td>0</td>
+
+<td>180</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Windows E3</td>
+
+<td>4,610</td>
+
+<td>468</td>
+
+<td>4,142</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:10.2%;'>
+
+10.2%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr class=''>
+
+<td><span class='badge addon'>Add-On</span></td>
+
+<td>Windows Store</td>
+
+<td>25</td>
+
+<td>0</td>
+
+<td>25</td>
+
+<td>
+
+<div class='progress'>
+
+<div class='progress-bar low'
+style='width:0%;'>
+
+0%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- Footer -->
+    <!-- ========================================================= -->
+
+    <footer>
+
+        <hr>
+
+        <p>
+
+            <strong>M365LicenseManager</strong>
+
+            &nbsp;|&nbsp;
+
+            Version 0.6.0
+
+        </p>
+
+        <p>
+
+            Powered by Microsoft Graph PowerShell SDK
+
+        </p>
+
+    </footer>
+
+</div>
+
+<script>
+
+function filterTable() {
+
+    const input = document.getElementById("licenseSearch");
+    const filter = input.value.toUpperCase();
+
+    const table = document.querySelector(".inventory-table");
+
+    if (!table)
+        return;
+
+    const rows = table.getElementsByTagName("tr");
+
+    for (let i = 1; i < rows.length; i++) {
+
+        const cell = rows[i].getElementsByTagName("td")[1];
+
+        if (!cell)
+            continue;
+
+        const text = cell.textContent || cell.innerText;
+
+        rows[i].style.display =
+            text.toUpperCase().includes(filter)
+            ? ""
+            : "none";
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>
