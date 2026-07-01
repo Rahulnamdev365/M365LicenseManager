@@ -1,4 +1,4 @@
-function Get-LicenseStatistics {
+function Get-M365LicenseStatistics {
 
     [CmdletBinding()]
     param(
